@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
 
         binding.setLifecycleOwner(this);
         binding.setViewModel(homeViewModel);
-        binding.recyclerView.setAdapter(new HomeListAdapter());
+        binding.recyclerView.setAdapter(new HomeListAdapter(getContext()));
 
         return binding.getRoot();
     }

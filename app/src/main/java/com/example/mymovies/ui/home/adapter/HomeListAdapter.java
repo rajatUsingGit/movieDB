@@ -1,6 +1,9 @@
 package com.example.mymovies.ui.home.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,11 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymovies.data.local.MovieItem;
 import com.example.mymovies.databinding.ListItemBinding;
+import com.example.mymovies.ui.DetailActivity;
 
 public class HomeListAdapter extends ListAdapter<MovieItem, HomeListViewHolder> {
 
-    public HomeListAdapter() {
+    private final Context mContext;
+
+    public HomeListAdapter(Context context) {
         super(DIFF_CALLBACK);
+        mContext = context;
     }
 
     public static final DiffUtil.ItemCallback<MovieItem> DIFF_CALLBACK =
@@ -42,6 +49,15 @@ public class HomeListAdapter extends ListAdapter<MovieItem, HomeListViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull HomeListViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        MovieItem movieItem = getItem(position);
+        holder.bind(movieItem);
+        holder.binding.textBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra("data", movieItem);
+                mContext.startActivity(intent);
+            }
+        });
     }
 }

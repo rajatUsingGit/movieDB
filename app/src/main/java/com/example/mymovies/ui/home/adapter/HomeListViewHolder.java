@@ -7,7 +7,7 @@ import com.example.mymovies.databinding.ListItemBinding;
 
 public class HomeListViewHolder extends RecyclerView.ViewHolder {
 
-    private final ListItemBinding binding;
+    public final ListItemBinding binding;
 
     public HomeListViewHolder(ListItemBinding binding) {
         super(binding.getRoot());
