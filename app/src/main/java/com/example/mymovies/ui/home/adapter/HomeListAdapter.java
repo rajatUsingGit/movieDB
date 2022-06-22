@@ -1,4 +1,4 @@
-package com.example.mymovies.adapter;
+package com.example.mymovies.ui.home.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymovies.data.local.MovieItem;
 import com.example.mymovies.databinding.ListItemBinding;
@@ -33,7 +34,10 @@ public class HomeListAdapter extends ListAdapter<MovieItem, HomeListViewHolder> 
     @NonNull
     @Override
     public HomeListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new HomeListViewHolder(ListItemBinding.inflate(LayoutInflater.from(parent.getContext())));
+        ListItemBinding listItemBinding = ListItemBinding.inflate(LayoutInflater.from(parent.getContext()));
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        listItemBinding.getRoot().setLayoutParams(lp);
+        return new HomeListViewHolder(listItemBinding);
     }
 
     @Override

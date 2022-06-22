@@ -1,4 +1,4 @@
-package com.example.mymovies.adapter;
+package com.example.mymovies.ui.home.adapter;
 
 import androidx.recyclerview.widget.RecyclerView;
 
