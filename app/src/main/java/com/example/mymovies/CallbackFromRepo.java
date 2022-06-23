@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CallbackFromRepo {
     void receiveData(List<MovieItem> movieItems, boolean isMainThread);
+    void onNoDataFetched();
 }

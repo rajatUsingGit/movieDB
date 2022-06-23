@@ -39,6 +39,15 @@ public class MovieRepository {
         mRemoteApiService = WebApi.getInstance();
     }
 
+    public void insertAll(List<MovieItem> movieItems) {
+        databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mLocalDatabase.getDao().insertAll(movieItems);
+            }
+        });
+    }
+
     public void insert(MovieItem movieItem) {
         databaseWriteExecutor.execute(new Runnable() {
             @Override
@@ -48,11 +57,37 @@ public class MovieRepository {
         });
     }
 
-    public void fetchList(boolean onlyBookmarked, CallbackFromRepo callback) {
+    public void update(MovieItem movieItem) {
+        databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mLocalDatabase.getDao().update(movieItem);
+            }
+        });
+    }
+
+    public MovieItem getMovieById(int id) {
+        Future<MovieItem> movieItemFuture = databaseWriteExecutor.submit(new Callable<MovieItem>() {
+            @Override
+            public MovieItem call() throws Exception {
+                return mLocalDatabase.getDao().getMovieById(id);
+            }
+        });
+        try {
+            return movieItemFuture.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void fetchList(boolean onlyBookmarked, boolean tryOnline, CallbackFromRepo callback) {
         if (onlyBookmarked) {
             fetchMoviesLocally(true, callback);
-        } else {
+        } else if (tryOnline) {
             fetchMoviesRemotely(callback);
+        } else {
+            fetchMoviesLocally(false, callback);
         }
     }
 
@@ -76,14 +111,21 @@ public class MovieRepository {
                                    @NonNull Response<WebResponse> response) {
                 WebResponse webResponse = response.body();
                 if (webResponse == null) {
+                    callback.onNoDataFetched();
                     return;
                 }
-                callback.receiveData(webResponse.movies, true);
+                List<MovieItem> movieItems = webResponse.movies;
+                if (movieItems == null || movieItems.isEmpty()) {
+                    callback.onNoDataFetched();
+                } else {
+                    callback.receiveData(movieItems, true);
+                }
             }
 
             @Override
             public void onFailure(@NonNull Call<WebResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, t.getMessage());
+                callback.onNoDataFetched();
             }
         });
     }

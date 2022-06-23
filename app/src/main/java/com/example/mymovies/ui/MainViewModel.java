@@ -23,19 +23,26 @@ public class MainViewModel extends AndroidViewModel implements CallbackFromRepo 
     public MainViewModel(Application application) {
         super(application);
         movieRepository = new MovieRepository(application);
-        movieRepository.fetchList(false, this);
+        movieRepository.fetchList(false, true, this);
     }
 
-    public void processBottomNav(boolean onlyBookmarked) {
-        movieRepository.fetchList(onlyBookmarked, this);
+    public void refreshUIFromNetwork(boolean onlyBookmarked) {
+        movieRepository.fetchList(onlyBookmarked, true, this);
     }
 
     @Override
     public void receiveData(List<MovieItem> items, boolean isMainThread) {
         if (isMainThread) {
             _movieItems.setValue(items);
+            movieRepository.insertAll(items);
         } else {
             _movieItems.postValue(items);
         }
     }
+
+    @Override
+    public void onNoDataFetched() {
+        movieRepository.fetchList(false, false, this);
+    }
+
 }

@@ -55,7 +55,7 @@ public class MainListAdapter extends ListAdapter<MovieItem, MainListViewHolder> 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra("data", movieItem);
+                intent.putExtra("id", movieItem.id);
                 mContext.startActivity(intent);
             }
         });

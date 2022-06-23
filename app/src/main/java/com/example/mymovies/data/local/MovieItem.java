@@ -26,12 +26,13 @@ public class MovieItem implements Parcelable {
     public String posterPath;
 
     @ColumnInfo(name = "bookmark")
-    public boolean isBookmarked = false;
+    public boolean isBookmarked;
 
-    public MovieItem(int id, String title, String posterPath) {
+    public MovieItem(int id, String title, String posterPath, boolean isBookmarked) {
         this.id = id;
         this.title = title;
         this.posterPath = posterPath;
+        this.isBookmarked = isBookmarked;
     }
 
     public MovieItem(Parcel in) {

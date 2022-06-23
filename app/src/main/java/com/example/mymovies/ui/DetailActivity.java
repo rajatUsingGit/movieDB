@@ -1,6 +1,7 @@
 package com.example.mymovies.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -27,18 +28,30 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Intent intent = getIntent();
         if (intent != null) {
-            movieItem = intent.getParcelableExtra("data");
+            int id = intent.getIntExtra("id", 0);
+            movieItem = movieRepository.getMovieById(id);
             binding.title.setText(movieItem.title);
             Glide.with(this)
                     .load(Constants.IMAGE_BASE_URL + movieItem.posterPath)
                     .into(binding.image);
         }
+        setTextForBookmarkButton(binding.bookmarkButton);
         binding.bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                movieItem.isBookmarked = true;
-                movieRepository.insert(movieItem);
+                movieItem.isBookmarked = !movieItem.isBookmarked;
+                movieRepository.update(movieItem);
+                setTextForBookmarkButton(binding.bookmarkButton);
             }
         });
     }
+
+    private void setTextForBookmarkButton(AppCompatButton button) {
+        if (movieItem.isBookmarked) {
+            button.setText("remove bookmark");
+        } else {
+            button.setText("add bookmark");
+        }
+    }
+
 }
