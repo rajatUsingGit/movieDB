@@ -1,4 +1,4 @@
-package com.example.mymovies.ui.home.adapter;
+package com.example.mymovies.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymovies.data.local.MovieItem;
 import com.example.mymovies.databinding.ListItemBinding;
-import com.example.mymovies.ui.DetailActivity;
 
-public class HomeListAdapter extends ListAdapter<MovieItem, HomeListViewHolder> {
+public class MainListAdapter extends ListAdapter<MovieItem, MainListViewHolder> {
 
     private final Context mContext;
 
-    public HomeListAdapter(Context context) {
+    public MainListAdapter(Context context) {
         super(DIFF_CALLBACK);
         mContext = context;
     }
@@ -28,27 +27,28 @@ public class HomeListAdapter extends ListAdapter<MovieItem, HomeListViewHolder> 
             new DiffUtil.ItemCallback<MovieItem>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull MovieItem oldItem, @NonNull MovieItem newItem) {
-                    return oldItem.title.equals(newItem.title);
+                    return oldItem.id == newItem.id;
                 }
 
                 @Override
                 public boolean areContentsTheSame(@NonNull MovieItem oldItem, @NonNull MovieItem newItem) {
-                    return oldItem.title.equals(newItem.title);
+                    return oldItem.title.equals(newItem.title)
+                            && oldItem.posterPath.equals(newItem.posterPath);
                 }
             };
 
 
     @NonNull
     @Override
-    public HomeListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MainListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ListItemBinding listItemBinding = ListItemBinding.inflate(LayoutInflater.from(parent.getContext()));
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         listItemBinding.getRoot().setLayoutParams(lp);
-        return new HomeListViewHolder(listItemBinding);
+        return new MainListViewHolder(listItemBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MainListViewHolder holder, int position) {
         MovieItem movieItem = getItem(position);
         holder.bind(movieItem);
         holder.binding.textBox.setOnClickListener(new View.OnClickListener() {

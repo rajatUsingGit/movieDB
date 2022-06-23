@@ -1,15 +1,15 @@
-package com.example.mymovies.ui.home.adapter;
+package com.example.mymovies.ui;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymovies.data.local.MovieItem;
 import com.example.mymovies.databinding.ListItemBinding;
 
-public class HomeListViewHolder extends RecyclerView.ViewHolder {
+public class MainListViewHolder extends RecyclerView.ViewHolder {
 
     public final ListItemBinding binding;
 
-    public HomeListViewHolder(ListItemBinding binding) {
+    public MainListViewHolder(ListItemBinding binding) {
         super(binding.getRoot());
         this.binding = binding;
     }
