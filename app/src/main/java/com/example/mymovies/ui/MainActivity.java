@@ -1,10 +1,18 @@
 package com.example.mymovies.ui;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mymovies.R;
@@ -37,12 +45,29 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mMainViewModel.refreshUIFromNetwork(mCurrentMenu == R.id.navigation_bookmarks);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        SearchableInfo searchableInfo = searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class));
+        searchView.setSearchableInfo(searchableInfo);
+
+        return true;
     }
 
 }
