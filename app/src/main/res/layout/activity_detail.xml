@@ -4,43 +4,47 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/top_layout"
+        <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:textAlignment="center"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bookmark_card"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bookmark_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/primary_color"
+            app:cardElevation="@dimen/card_elevation"
+            android:layout_marginVertical="@dimen/vertical_margin_card"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
             app:layout_constraintBottom_toTopOf="@+id/image">
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="42sp"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bookmark_button"
+                android:textColor="@color/white"
+                android:background="@color/primary_color"
+                android:padding="@dimen/vertical_margin_card"
                 android:textStyle="bold"
-                android:textColor="@color/purple_700" />
-            <androidx.cardview.widget.CardView
+                android:layout_marginBottom="@dimen/vertical_margin_card"
+                android:textSize="@dimen/text_small"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/bookmark_button"
-                    android:background="@color/teal_700"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:padding="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:textSize="22sp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+                android:layout_height="wrap_content"/>
+        </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
@@ -50,8 +54,8 @@
             app:layout_constrainedHeight="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_layout"
+            app:layout_constraintTop_toBottomOf="@+id/bookmark_card"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

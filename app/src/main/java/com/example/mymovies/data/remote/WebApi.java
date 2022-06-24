@@ -13,9 +13,6 @@ public class WebApi {
     public interface ApiService {
         @GET("movie/popular")
         Call<WebResponse> getTrendingMovies();
-
-        @GET("movie/now_playing")
-        Call<WebResponse> getNowPlayingMovies();
     }
 
     private static volatile ApiService INSTANCE;

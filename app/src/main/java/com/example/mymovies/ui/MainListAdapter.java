@@ -50,8 +50,8 @@ public class MainListAdapter extends ListAdapter<MovieItem, MainListViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MainListViewHolder holder, int position) {
         MovieItem movieItem = getItem(position);
-        holder.bind(movieItem);
-        holder.binding.textBox.setOnClickListener(new View.OnClickListener() {
+        holder.getBinding().textBox.setText(movieItem.title);
+        holder.getBinding().textBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailActivity.class);
@@ -60,4 +60,5 @@ public class MainListAdapter extends ListAdapter<MovieItem, MainListViewHolder> 
             }
         });
     }
+
 }

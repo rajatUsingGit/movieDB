@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_bookmarks">Bookmarks</string>
     <string name="search_a_movie">Search movies</string>
+    <string name="no_result">No result</string>
+    <string name="add_bookmark">Add bookmark</string>
+    <string name="remove_bookmark">Remove bookmark</string>
 </resources>

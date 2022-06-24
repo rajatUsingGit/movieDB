@@ -1,10 +1,10 @@
-package com.example.mymovies;
+package com.example.mymovies.callbacks;
 
 import com.example.mymovies.data.local.MovieItem;
 
 import java.util.List;
 
 public interface CallbackFromRepo {
-    void receiveData(List<MovieItem> movieItems, boolean isMainThread);
+    void onDataFetched(List<MovieItem> movieItems, boolean isMainThread);
     void onNoDataFetched();
 }
