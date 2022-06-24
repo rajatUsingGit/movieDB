@@ -30,4 +30,7 @@ public interface MovieDao {
     @Query("SELECT * FROM movie_table WHERE id=:id")
     MovieItem getMovieById(int id);
 
+    @Query("SELECT * FROM movie_table WHERE UPPER(title)=UPPER(:title)")
+    MovieItem getMovieByTitle(String title);
+
 }

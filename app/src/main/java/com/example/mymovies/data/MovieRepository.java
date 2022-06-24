@@ -81,6 +81,21 @@ public class MovieRepository {
         }
     }
 
+    public MovieItem getMovieByTitle(String title) {
+        Future<MovieItem> movieItemFuture = databaseWriteExecutor.submit(new Callable<MovieItem>() {
+            @Override
+            public MovieItem call() throws Exception {
+                return mLocalDatabase.getDao().getMovieByTitle(title);
+            }
+        });
+        try {
+            return movieItemFuture.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void fetchList(boolean onlyBookmarked, boolean tryOnline, CallbackFromRepo callback) {
         if (onlyBookmarked) {
             fetchMoviesLocally(true, callback);
